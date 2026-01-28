@@ -59,7 +59,7 @@ double	BitcoinExchange::getExchangeRate(const std::string& date)
 {
 	std::map<std::string, double>::iterator value = dataBase.upper_bound(date); //tester auto
 	if (value == dataBase.begin())
-		throw std::out_of_range("Error: date is out of range.");
+		throw BadInput();
 	--value;
 	return value->second;
 }
@@ -108,7 +108,8 @@ void BitcoinExchange::processInput(const std::string& filename)
 		{
 			std::string date = getDate(line);
 			double numbers = getValue(line);
-			std::cout << date << " => " << numbers << " = " << numbers * getExchangeRate(date) << std::endl;
+			double value = getExchangeRate(date);
+			std::cout << date << " => " << numbers << " = " << numbers * value << std::endl;
 		}
 		catch (const std::exception& e)
 		{
