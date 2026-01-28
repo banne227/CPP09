@@ -1,0 +1,38 @@
+############################################################
+#                                                          #
+#   ██████╗ ██████╗ ███╗   ██╗                             #
+#   ██╔══██╗╚════██╗████╗  ██║                             #
+#   ██████╔╝ █████╔╝██╔██╗ ██║                             #
+#   ██╔══██╗██╔═══╝ ██║╚██╗██║                             #
+#   ██████╔╝███████╗██║ ╚████║                             #
+#   ╚═════╝ ╚══════╝╚═╝  ╚═══╝                             #
+#                                                          #
+#   File    : Makefile                                     #
+#   Created : 2026-01-28 12:04                             #
+#   Updated : 2026-01-28 12:04                             #
+#                                                          #
+############################################################
+
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+SRCS = BitcoinExchange.cpp main.cpp
+OBJS = $(SRCS:.cpp=.o)
+NAME = btc
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
