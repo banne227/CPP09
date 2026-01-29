@@ -7,7 +7,7 @@
 //#   ██████╔╝███████╗██║ ╚████║                             #
 //#   ╚═════╝ ╚══════╝╚═╝  ╚═══╝                             #
 //#                                                          #
-//#   File    : BitcoinExchange.cpp                                     #
+//#   File    : BitcoinExchange.cpp                          #
 //#   Created : 2026-01-28 11:24                             #
 //#   Updated : 2026-01-28 11:24                             #
 //#                                                          #
@@ -80,6 +80,10 @@ double getValue(const std::string& line)
 {
 	std::istringstream flux_line(line);
 	std::string value_str;
+
+	if (line.find('|') == std::string::npos)
+		throw BadInput();
+
 	std::getline(flux_line, value_str, '|');
 	std::getline(flux_line, value_str);
 
@@ -111,9 +115,13 @@ void BitcoinExchange::processInput(const std::string& filename)
 			double value = getExchangeRate(date);
 			std::cout << date << " => " << numbers << " = " << numbers * value << std::endl;
 		}
-		catch (const std::exception& e)
+		catch (const BadInput& e)
 		{
 			std::cerr << e.what() << line << std::endl;
+		}
+		catch (const std::exception& e)
+		{
+			std::cerr << e.what() << std::endl;
 		}
 	}
 }
