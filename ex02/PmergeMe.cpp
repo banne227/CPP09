@@ -15,6 +15,7 @@
 
 #include "PmergeMe.hpp"
 #include <iomanip>
+#include <time.h>
 
 PmergeMe::PmergeMe() {}
 
@@ -137,13 +138,15 @@ void PmergeMe::sortDeque(std::deque<int>& deq)
 
 void PmergeMe::sortContainers()
 {
-	clock_t start_vec = clock();
+	struct timespec start_vec, end_vec;
+	clock_gettime(CLOCK_MONOTONIC, &start_vec);
 	sortVector(this->vec);
-	clock_t end_vec = clock();
-	this->time_vec = static_cast<double>(end_vec - start_vec) / CLOCKS_PER_SEC * 1000000;
+	clock_gettime(CLOCK_MONOTONIC, &end_vec);
+	this->time_vec = (end_vec.tv_sec - start_vec.tv_sec) * 1000000.0 + (end_vec.tv_nsec - start_vec.tv_nsec) / 1000.0;
 
-	clock_t start_deq = clock();
+	struct timespec start_deq, end_deq;
+	clock_gettime(CLOCK_MONOTONIC, &start_deq);
 	sortDeque(this->deq);
-	clock_t end_deq = clock();
-	this->time_deq = static_cast<double>(end_deq - start_deq) / CLOCKS_PER_SEC * 1000000;
+	clock_gettime(CLOCK_MONOTONIC, &end_deq);
+	this->time_deq = (end_deq.tv_sec - start_deq.tv_sec) * 1000000.0 + (end_deq.tv_nsec - start_deq.tv_nsec) / 1000.0;
 }
