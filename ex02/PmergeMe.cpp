@@ -72,11 +72,30 @@ void PmergeMe::printContainers()
 		<< " elements with std::deque : " << this->time_deq << std::endl;
 }
 
-void PmergeMe::sortVector()
+void PmergeMe::sortVector(std::vector<int>& vec)
 {
+	if (vec.size() <= 1)
+		return;
 
-
-
+	std::vector<int> big;
+	std::vector<int> little;
+	for (int i = 1; i < vec.size(); i++)
+	{
+		if (vec[i] > vec[i - 1])
+		{
+			big.push_back(vec[i]);
+			little.push_back(vec[i - 1]);
+		}
+		else
+		{
+			big.push_back(vec[i - 1]);
+			little.push_back(vec[i]);
+		}
+		i++;
+	}
+	if (vec.size() % 2 != 0)
+		little.push_back(vec[vec.size() - 1]);
+	big = sortVector(big);
 }
 
 void PmergeMe::sortDeque()
