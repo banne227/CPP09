@@ -52,7 +52,8 @@ class PmergeMe
 		void parseInput(int argc, char** argv);
 		void printContainers();
 		void sortVector(std::vector<int>& vec);
-		void sortDeque();
+		void sortDeque(std::deque<int>& deq);
+		void sortContainers();
 };
 
 #endif
